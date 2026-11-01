@@ -1,22 +1,33 @@
-PreciousStones
+Protectii
 ==========
 
-Self-service protection for PVP Minecraft servers
+Self-service protection for PVP Minecraft servers — a remake of [PreciousStones](https://github.com/elBukkit/PreciousStones) for **Spigot 26.3** (Java 25).
 
-[![Build Status](https://travis-ci.org/marcelo-mason/PreciousStones.svg?branch=master)](https://travis-ci.org/marcelo-mason/PreciousStones)
-[![Download](https://img.shields.io/badge/snapshot-download-blue.svg)](http://jenkins.elmakers.com/job/PreciousStones/)
-[![Issues](https://img.shields.io/github/issues/elBukkit/PreciousStones.svg)](https://github.com/elBukkit/PreciousStones/issues)
-[![ghit.me](https://ghit.me/badge.svg?repo=marcelo-mason/PreciousStones)](https://ghit.me/repo/marcelo-mason/PreciousStones)
+This project is based on PreciousStones by Phaed, NathanWolf, xtomyserrax and contributors. The full original history is kept in this repository.
 
-## Server Version:
+## Server Version
 
-The latest versions of this plugin are only compatible with 1.18.* ! If you want to get the latest 1.17.2 supported version, please check on [releases](https://github.com/elBukkit/PreciousStones/releases/tag/1.17.2)!
+Spigot 26.3 (`api-version: 26.3`), Java 25.
 
-## Note:
+## Integrations
 
-Pull-requests for bug fixes or new features are welcomed and will be merged in if they do not break existing functionalities.
+Optional, detected at startup: WorldGuard 7, WorldEdit 7, Vault, mcMMO 2.
 
-## Dynmap-PreciousStones:
+Support for SimpleClans, LWC, Lockette, RedProtect, CombatTag, AntiCheat, Permissions and PermissionsBukkit was removed.
 
-If you want to get the updated Dynmap-PreciousStones plugin, please head to this github: [Dynmap-Precioustones](https://github.com/FireController1847/DynmapPS)
+## Changes from PreciousStones 1.18
 
+- Builds against the Spigot 26.3 API; deprecated and legacy (pre-1.13) API calls replaced.
+- Grief Revert: griefed blocks are saved again (database insert was failing).
+- Translocation: enabling restores blocks and disabling hides them (was reversed and looped); block types are stored correctly.
+- No more ~5 s server freeze from legacy material support (signs, visualization).
+- Clearing a field's allowed list (e.g. after a purchase) is saved.
+- SQLite waits for locks instead of failing with "database is locked".
+
+## Build
+
+```
+mvn package
+```
+
+The plugin jar is written to `target/PreciousStones.jar`.
