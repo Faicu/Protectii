@@ -1,0 +1,8 @@
+name: PSTestHarness
+version: '1.0'
+main: pst.Harness
+api-version: '26.3'
+softdepend: [mcMMO, PreciousStones]
+commands:
+  pst:
+    description: Test harness

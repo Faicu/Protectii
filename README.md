@@ -24,6 +24,11 @@ Support for SimpleClans, LWC, Lockette, RedProtect, CombatTag, AntiCheat, Permis
 - Clearing a field's allowed list (e.g. after a purchase) is saved.
 - SQLite waits for locks instead of failing with "database is locked".
 
+## Documentation
+
+- [`docs/NOTE.md`](docs/NOTE.md) — project status, all changes and fixed bugs, what is still untested (Romanian).
+- [`tests/README.md`](tests/README.md) — in-game test setup and scenarios (55/55 passing on Spigot 26.3).
+
 ## Download
 
 Ready-to-use plugin: [`release/Protectii-26.3.jar`](release/Protectii-26.3.jar) — put it in the server's `plugins/` folder.
