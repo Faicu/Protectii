@@ -258,7 +258,7 @@ public final class ForceFieldManager {
                 ScoreboardManager manager = Bukkit.getScoreboardManager();
                 Scoreboard board = manager.getMainScoreboard();
 
-                Team team = board.getPlayerTeam(offlinePlayer);
+                Team team = (offlinePlayer.getName() == null ? null : board.getEntryTeam(offlinePlayer.getName()));
 
                 if (team != null) {
                     field.addAllowed("t:" + team.getName());
@@ -742,7 +742,7 @@ public final class ForceFieldManager {
                         ScoreboardManager manager = Bukkit.getScoreboardManager();
                         Scoreboard board = manager.getMainScoreboard();
 
-                        Team team = board.getPlayerTeam(offlinePlayer);
+                        Team team = (offlinePlayer.getName() == null ? null : board.getEntryTeam(offlinePlayer.getName()));
 
                         if (team != null) {
                             if (tm.equalsIgnoreCase(team.getName())) {
@@ -2943,7 +2943,7 @@ public final class ForceFieldManager {
                 ScoreboardManager manager = Bukkit.getScoreboardManager();
                 Scoreboard board = manager.getMainScoreboard();
 
-                Team team = board.getPlayerTeam(offlinePlayer);
+                Team team = (offlinePlayer.getName() == null ? null : board.getEntryTeam(offlinePlayer.getName()));
 
                 if (team != null) {
                     field.addAllowed("t:" + team.getName());

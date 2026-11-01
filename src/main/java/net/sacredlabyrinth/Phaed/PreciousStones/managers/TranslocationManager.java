@@ -387,12 +387,12 @@ public final class TranslocationManager {
         inhabitants.add(player);
 
         for (Player p : inhabitants) {
-            p.sendBlockChange(field.getLocation(), Material.GLASS, (byte) 0);
+            p.sendBlockChange(field.getLocation(), Material.GLASS.createBlockData());
         }
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             for (Player p : inhabitants) {
-                p.sendBlockChange(field.getLocation(), field.getMaterial(), (byte) 0);
+                p.sendBlockChange(field.getLocation(), field.getMaterial().createBlockData());
             }
         }, 20);
     }
@@ -425,7 +425,7 @@ public final class TranslocationManager {
             ChatHelper.send(player, "nothingToImport");
         }
 
-        field.setDisabled(true);
+        field.setDisabledState(true);
         field.getFlagsModule().dirtyFlags("importBlocks");
     }
 
@@ -456,7 +456,7 @@ public final class TranslocationManager {
             ChatHelper.send(player, "nothingToRemove");
         }
 
-        field.setDisabled(true);
+        field.setDisabledState(true);
         field.getFlagsModule().dirtyFlags("removeBlocks");
     }
 

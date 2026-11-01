@@ -2,6 +2,7 @@ package net.sacredlabyrinth.Phaed.PreciousStones.entries;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONObject;
@@ -41,7 +42,7 @@ public class ItemStackEntry {
             for (Object enchKey : ench.keySet()) {
                 String key = (String) enchKey;
                 Integer level = Integer.parseInt(ench.get(key).toString());
-                this.enchantments.put(Enchantment.getByKey(NamespacedKey.minecraft(key)), level);
+                this.enchantments.put(Registry.ENCHANTMENT.get(NamespacedKey.minecraft(key)), level);
             }
         }
     }

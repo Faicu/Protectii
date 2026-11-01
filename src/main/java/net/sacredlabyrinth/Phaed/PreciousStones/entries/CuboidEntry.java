@@ -311,7 +311,7 @@ public class CuboidEntry {
         for (Block block : lineOfSight) {
             if (!envelopsPlusOne(block.getLocation())) {
                 if (expanded != null) {
-                    player.sendBlockChange(expanded, Material.AIR, (byte) 0);
+                    player.sendBlockChange(expanded, Material.AIR.createBlockData());
                 }
 
                 expanded = block.getLocation();

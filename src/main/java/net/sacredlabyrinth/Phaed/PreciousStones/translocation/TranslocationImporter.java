@@ -98,7 +98,7 @@ public class TranslocationImporter implements Runnable {
 
                 if (!translocationQueue.iterator().hasNext()) {
                     Bukkit.getServer().getScheduler().cancelTask(timerID);
-                    field.setDisabled(true);
+                    field.setDisabledState(true);
                     field.getTranslocatingModule().setTranslocating(false);
                     field.getFlagsModule().dirtyFlags("TranslocationImporter");
                     ChatHelper.send(player, "importComplete");

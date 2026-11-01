@@ -537,7 +537,7 @@ public class VisualizationManager {
         vis.addBlock(block);
         visualizations.put(player.getName(), vis);
 
-        player.sendBlockChange(block.getLocation(), material, (byte) 0);
+        player.sendBlockChange(block.getLocation(), material.createBlockData());
     }
 
     /**

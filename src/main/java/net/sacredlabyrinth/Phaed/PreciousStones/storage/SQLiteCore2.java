@@ -32,6 +32,9 @@ class SQLiteCore2 extends AbstractDBCore {
         hikariConf.setJdbcUrl("jdbc:sqlite:" + file.getAbsolutePath());
         hikariConf.setMinimumIdle(2);
         hikariConf.setMaximumPoolSize(2);
+        // two pooled connections write concurrently: wait for the lock instead of failing with SQLITE_BUSY
+        hikariConf.addDataSourceProperty("busy_timeout", "5000");
+        hikariConf.addDataSourceProperty("journal_mode", "WAL");
         dataSource = new HikariDataSource(hikariConf);
     }
     

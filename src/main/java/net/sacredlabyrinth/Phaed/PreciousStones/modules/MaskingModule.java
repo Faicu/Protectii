@@ -44,9 +44,9 @@ public class MaskingModule {
 
         for (Player player : fieldInhabitants) {
             if (field.hasFlag(FieldFlag.MASK_ON_ENABLED)) {
-                player.sendBlockChange(field.getLocation(), field.getSettings().getMaskOnEnabledBlock(), (byte) 0);
+                player.sendBlockChange(field.getLocation(), field.getSettings().getMaskOnEnabledBlock().createBlockData());
             } else {
-                player.sendBlockChange(field.getLocation(), field.getSettings().getMaskOnDisabledBlock(), (byte) 0);
+                player.sendBlockChange(field.getLocation(), field.getSettings().getMaskOnDisabledBlock().createBlockData());
             }
         }
     }
@@ -70,7 +70,7 @@ public class MaskingModule {
         }
 
         for (Player player : fieldInhabitants) {
-            player.sendBlockChange(field.getLocation(), field.getMaterial(), (byte)0);
+            player.sendBlockChange(field.getLocation(), field.getMaterial().createBlockData());
         }
     }
 }

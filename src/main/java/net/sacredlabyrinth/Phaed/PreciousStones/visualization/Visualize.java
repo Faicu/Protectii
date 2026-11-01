@@ -46,7 +46,7 @@ public class Visualize implements Runnable {
                     Block block = bd.getBlock();
                     player.sendBlockChange(loc, block.getBlockData());
                 } else {
-                    player.sendBlockChange(loc, bd.getType(), (byte)0);
+                    player.sendBlockChange(loc, bd.getType().createBlockData());
                 }
             }
             i++;

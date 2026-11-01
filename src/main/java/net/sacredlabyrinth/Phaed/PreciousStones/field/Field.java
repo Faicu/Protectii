@@ -566,7 +566,7 @@ public class Field extends AbstractVec implements Comparable<Field> {
             ScoreboardManager manager = Bukkit.getScoreboardManager();
             Scoreboard board = manager.getMainScoreboard();
 
-            Team team = board.getPlayerTeam(offlinePlayer);
+            Team team = (offlinePlayer.getName() == null ? null : board.getEntryTeam(offlinePlayer.getName()));
 
             if (team != null) {
                 if (allowed.contains("t:" + team.getName().toLowerCase())) {
@@ -1101,6 +1101,15 @@ public class Field extends AbstractVec implements Comparable<Field> {
     }
 
     /**
+     * Sets the disabled state without side effects, used when a translocation that was started by setDisabled finishes
+     *
+     * @param disabled
+     */
+    public void setDisabledState(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    /**
      * Disables the field
      *
      * @param disabled
@@ -1155,7 +1164,7 @@ public class Field extends AbstractVec implements Comparable<Field> {
 
                 if (flags.hasFlag(FieldFlag.TRANSLOCATION)) {
                     if (isNamed()) {
-                        plugin.getTranslocationManager().applyTranslocation(this);
+                        plugin.getTranslocationManager().clearTranslocation(this);
                     }
                 }
 
@@ -1191,7 +1200,7 @@ public class Field extends AbstractVec implements Comparable<Field> {
 
                 if (flags.hasFlag(FieldFlag.TRANSLOCATION)) {
                     if (isNamed()) {
-                        plugin.getTranslocationManager().clearTranslocation(this);
+                        plugin.getTranslocationManager().applyTranslocation(this);
                     }
                 }
 

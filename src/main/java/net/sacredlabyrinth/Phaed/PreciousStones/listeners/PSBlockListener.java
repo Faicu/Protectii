@@ -268,12 +268,10 @@ public class PSBlockListener implements Listener {
                     // only apply via redstone if were not over the max
 
                     if (!field.getTranslocatingModule().isOverRedstoneMax()) {
-                        plugin.getTranslocationManager().applyTranslocation(field);
                         field.setDisabled(false);
                         field.getFlagsModule().dirtyFlags("onBlockRedstoneChange1");
                     }
                 } else {
-                    plugin.getTranslocationManager().clearTranslocation(field);
                     field.setDisabled(true);
                     field.getFlagsModule().dirtyFlags("onBlockRedstoneChange2");
                 }

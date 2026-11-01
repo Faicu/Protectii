@@ -1681,7 +1681,7 @@ public class StorageManager {
         // type_id is the legacy numeric id; the column is NOT NULL in existing databases, so it gets a placeholder
         try (Connection conn = getConnection();
                 PreparedStatement prepStmt = conn.prepareStatement(
-                        "INSERT INTO `pstone_storedblocks` (`name`, `player_name`, `world`, `x`, `y`, `z`, "
+                        "REPLACE INTO `pstone_storedblocks` (`name`, `player_name`, `world`, `x`, `y`, `z`, "
                         + "`type_id`, `type`, `data`, `contents`, `sign_text`, `applied`) "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 

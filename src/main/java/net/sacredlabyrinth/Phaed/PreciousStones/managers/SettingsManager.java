@@ -724,7 +724,6 @@ public final class SettingsManager {
         		type == Material.LEVER || 
         		isAPressurePlate(type) || 
         		isAnyTypeOfDoor(type) || 
-        		type == Material.AIR || 
         		isAButton(type) || 
         		type == Material.SNOW || 
         		type == Material.BROWN_MUSHROOM_BLOCK || 

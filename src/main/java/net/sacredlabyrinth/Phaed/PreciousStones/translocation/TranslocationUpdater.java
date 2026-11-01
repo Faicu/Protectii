@@ -92,7 +92,7 @@ public class TranslocationUpdater implements Runnable {
 
                 if (!translocationQueue.iterator().hasNext()) {
                     Bukkit.getServer().getScheduler().cancelTask(timerID);
-                    field.setDisabled(true);
+                    field.setDisabledState(true);
                     field.getTranslocatingModule().setTranslocating(false);
                     field.getFlagsModule().dirtyFlags("TranslocationUpdater");
                 }

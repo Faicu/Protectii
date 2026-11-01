@@ -90,7 +90,7 @@ public class TranslocationRemover implements Runnable {
 
             if (!dependentQueue.iterator().hasNext()) {
                 Bukkit.getServer().getScheduler().cancelTask(timerID);
-                field.setDisabled(false);
+                field.setDisabledState(false);
                 field.getTranslocatingModule().setTranslocating(false);
                 field.getFlagsModule().dirtyFlags("TranslocationRemover");
                 ChatHelper.send(player, "removalComplete");

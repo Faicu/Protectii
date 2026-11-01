@@ -16,6 +16,8 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffectType;
 
@@ -155,13 +157,10 @@ public final class EntryManager {
                                 for (ItemStack item : items) {
                                     if (item != null) {
                                         if (plugin.getSettingsManager().isRepairableItemType(new BlockTypeEntry(item.getType()))) {
-                                            short dur = item.getDurability();
-                                            if (dur > 0) {
-                                                dur -= field.getSettings().getRepair();
-                                                if (dur < 0) {
-                                                    dur = 0;
-                                                }
-                                                item.setDurability(dur);
+                                            ItemMeta meta = item.getItemMeta();
+                                            if (meta instanceof Damageable damageable && damageable.getDamage() > 0) {
+                                                damageable.setDamage(Math.max(0, damageable.getDamage() - field.getSettings().getRepair()));
+                                                item.setItemMeta(meta);
                                                 plugin.getCommunicationManager().showRepair(player);
                                                 hasRepair = true;
                                                 break;
@@ -182,7 +181,7 @@ public final class EntryManager {
                                         player.setHealth((int) Math.max(health, 0));
 
                                         if (health <= 1) {
-                                            player.playEffect(EntityEffect.DEATH);
+                                            player.playEffect(EntityEffect.ENTITY_DEATH);
                                         }
 
                                         plugin.getCommunicationManager().showDamage(player);
@@ -525,7 +524,7 @@ public final class EntryManager {
         if (field.hasFlag(FieldFlag.HIDABLE)) {
             if (field.getHidingModule().isHidden()) {
                 if (plugin.getPermissionsManager().has(player, "preciousstones.bypass.hiding")) {
-                    player.sendBlockChange(field.getLocation(), field.getMaterial(), (byte)0);
+                    player.sendBlockChange(field.getLocation(), field.getMaterial().createBlockData());
                 }
             }
         }
