@@ -341,6 +341,11 @@ public final class ForesterManager {
             return null;
         }
 
-        return EntityType.valueOf(entity.toUpperCase());
+        try {
+            return EntityType.valueOf(entity.toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            PreciousStones.log("Unknown creature type in forester field: " + entity);
+            return null;
+        }
     }
 }
