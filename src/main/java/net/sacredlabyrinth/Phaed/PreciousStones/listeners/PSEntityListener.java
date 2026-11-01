@@ -675,16 +675,9 @@ public class PSEntityListener implements Listener {
                         if (plugin.getPermissionsManager().has(attacker, "preciousstones.bypass.pvp")) {
                             plugin.getCommunicationManager().warnBypassPvP(attacker, victim, field);
                         } else {
-                            //If both the attacker and the victim are in combat, don't cancel it
-                            if (((plugin.getCombatTagManager().isInCombat(attacker)) && (plugin.getCombatTagManager().isInCombat(victim)))) {
-                                //warn both players
-                                plugin.getCommunicationManager().warnBypassPvPDueToCombat(attacker, victim);
-                                return;
-                            } else {
-                                sub.setCancelled(true);
-                                plugin.getCommunicationManager().warnPvP(attacker, victim, field);
-                                return;
-                            }
+                            sub.setCancelled(true);
+                            plugin.getCommunicationManager().warnPvP(attacker, victim, field);
+                            return;
                         }
                     } else {
                         field = plugin.getForceFieldManager().getEnabledSourceField(attacker.getLocation(), FieldFlag.PREVENT_PVP);
@@ -842,16 +835,9 @@ public class PSEntityListener implements Listener {
                     if (plugin.getPermissionsManager().has(attacker, "preciousstones.bypass.pvp")) {
                         plugin.getCommunicationManager().warnBypassPvP(attacker, victim, field);
                     } else {
-                        //If both the attacker and the victim are in combat, don't cancel it
-                        if (((plugin.getCombatTagManager().isInCombat(attacker)) && (plugin.getCombatTagManager().isInCombat(victim)))) {
-                            //warn both players
-                            plugin.getCommunicationManager().warnBypassPvPDueToCombat(attacker, victim);
-                            return;
-                        } else {
-                            event.setCancelled(true);
-                            plugin.getCommunicationManager().warnPvP(attacker, victim, field);
-                            return;
-                        }
+                        event.setCancelled(true);
+                        plugin.getCommunicationManager().warnPvP(attacker, victim, field);
+                        return;
                     }
                 } else {
                     field = plugin.getForceFieldManager().getEnabledSourceField(attacker.getLocation(), FieldFlag.PREVENT_PVP);

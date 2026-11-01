@@ -8,7 +8,6 @@ import net.sacredlabyrinth.Phaed.PreciousStones.field.FieldFlag;
 import net.sacredlabyrinth.Phaed.PreciousStones.field.FieldSettings;
 import net.sacredlabyrinth.Phaed.PreciousStones.helpers.ChatHelper;
 import net.sacredlabyrinth.Phaed.PreciousStones.helpers.StackHelper;
-import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.EntityEffect;
@@ -149,7 +148,7 @@ public final class EntryManager {
                             if (FieldFlag.REPAIR.applies(field, player)) {
                                 ItemStack[] contents = player.getInventory().getContents();
                                 ItemStack[] armors = player.getInventory().getArmorContents();
-                                ItemStack[] items = (ItemStack[])ArrayUtils.addAll(contents, armors);
+                                ItemStack[] items = java.util.stream.Stream.concat(java.util.Arrays.stream(contents), java.util.Arrays.stream(armors)).toArray(ItemStack[]::new);
 
                                 for (ItemStack item : items) {
                                     if (item != null) {

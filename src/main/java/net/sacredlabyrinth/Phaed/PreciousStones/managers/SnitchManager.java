@@ -190,27 +190,6 @@ public class SnitchManager {
         }
     }
 
-    /**
-     * @param player
-     * @param block
-     */
-    public void recordSnitchLWC(Player player, Block block, Set<String> actions) {
-        if (plugin.getPermissionsManager().isVanished(player)) {
-            return;
-        }
-
-        if (!plugin.getPermissionsManager().has(player, "preciousstones.bypass.snitch")) {
-            List<Field> snitchFields = plugin.getForceFieldManager().getEnabledSourceFields(block.getLocation(), FieldFlag.SNITCH);
-
-            for (Field field : snitchFields) {
-                if (FieldFlag.SNITCH.applies(field, player)) {
-                    for (String action : actions) {
-                        plugin.getStorageManager().offerSnitchEntry(new SnitchEntry(field, player.getName(), ChatHelper.format("_LWC") + " " + action, Helper.toLocationString(block.getLocation()), 1));
-                    }
-                }
-            }
-        }
-    }
 
     /**
      * @param player

@@ -28,7 +28,6 @@ public class PreciousStones extends JavaPlugin {
     private static Logger logger = Logger.getLogger("Minecraft");
     private LanguageManager languageManager;
     private SettingsManager settingsManager;
-    private SimpleClansManager simpleClansManager;
     private CommandManager commandManager;
     private LimitManager limitManager;
     private ForceFieldManager forceFieldManager;
@@ -48,8 +47,6 @@ public class PreciousStones extends JavaPlugin {
     private VisualizationManager visualizationManager;
     private ForesterManager foresterManager;
     private WorldGuardManager worldGuardManager;
-    private RedProtectManager redProtectManager;
-    private CombatTagManager combatTagManager;
     private ConfiscationManager confiscationManager;
     private TranslocationManager translocationManager;
     private TeleportationManager teleportationManager;
@@ -127,7 +124,6 @@ public class PreciousStones extends JavaPlugin {
 
         displayStatusInfo();
 
-        simpleClansManager = new SimpleClansManager();
         commandManager = new CommandManager();
         limitManager = new LimitManager();
         forceFieldManager = new ForceFieldManager();
@@ -147,8 +143,6 @@ public class PreciousStones extends JavaPlugin {
         griefUndoManager = new GriefUndoManager();
         storageManager = new StorageManager();
         worldGuardManager = new WorldGuardManager();
-        redProtectManager = new RedProtectManager();
-        combatTagManager = new CombatTagManager();
         confiscationManager = new ConfiscationManager();
         potionManager = new PotionManager();
         translocationManager = new TranslocationManager();
@@ -164,11 +158,6 @@ public class PreciousStones extends JavaPlugin {
 
         if (permissionsManager.hasMcMMO()) {
             mcmmoListener = new McMMOListener();
-        }
-
-        if (permissionsManager.hasLWC()) {
-            @SuppressWarnings("unused")
-			LWCListener lwcListener = new LWCListener();
         }
 
         api = new Api();
@@ -338,12 +327,6 @@ public class PreciousStones extends JavaPlugin {
         return permissionsManager;
     }
 
-    /**
-     * @return the simpleClansManager
-     */
-    public SimpleClansManager getSimpleClansManager() {
-        return simpleClansManager;
-    }
 
     /**
      * @return the visualizationManager
@@ -374,9 +357,6 @@ public class PreciousStones extends JavaPlugin {
         return worldGuardManager;
     }
 
-    public CombatTagManager getCombatTagManager() {
-        return combatTagManager;
-    }
 
     public PSPlayerListener getPlayerListener() {
         return playerListener;
@@ -426,7 +406,4 @@ public class PreciousStones extends JavaPlugin {
         return messages;
     }
 
-    public RedProtectManager getRedProtectManager() {
-        return redProtectManager;
-    }
 }

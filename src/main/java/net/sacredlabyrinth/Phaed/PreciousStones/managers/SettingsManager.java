@@ -31,7 +31,6 @@ public final class SettingsManager {
     private BlockTypeEntry defaulItemCurrency;
     private int maxTargetDistance;
     private boolean commandsToRentBuy;
-    private boolean warAllow;
     private boolean oncePerBlockOnMove;
     private int maxSizeTranslocation;
     private int maxSizeTranslocationForRedstone;
@@ -44,7 +43,6 @@ public final class SettingsManager {
     private boolean disablePlaceWhileCreative;
     private boolean disableBreakWhileCreative;
     private boolean preventRemovalIfPlayerInField;
-    private boolean autoAddClan;
     private boolean autoAddTeam;
     private int globalFieldLimit;
     private boolean noRefunds;
@@ -127,7 +125,6 @@ public final class SettingsManager {
     private boolean dropOnDelete;
     private boolean disableAlertsForAdmins;
     private boolean disableBypassAlertsForAdmins;
-    private boolean disableSimpleClanHook;
     private boolean disableWorldEditHook;
     private boolean offByDefault;
     private boolean useIdInSnitches;
@@ -261,10 +258,8 @@ public final class SettingsManager {
 
         // ********************************** Settings
 
-        warAllow = loadBoolean("settings.allow-waring-clans-into-protections");
         preventRemovalIfPlayerInField = loadBoolean("settings.prevent-removal-if-player-in-field");
         commandsToRentBuy = loadBoolean("settings.use-commands-to-rent");
-        disableSimpleClanHook = loadBoolean("settings.disable-simpleclans-hook");
         disableWorldEditHook = loadBoolean("settings.disable-worldedit-hook");
         maxSizeTranslocation = loadInt("settings.max-size-translocation");
         maxSizeTranslocationForRedstone = loadInt("settings.max-size-translocation-for-redstone");
@@ -285,7 +280,6 @@ public final class SettingsManager {
         linesPerPage = loadInt("settings.lines-per-page");
         debug = loadBoolean("settings.show-debug-info");
         blacklistedWorlds = loadStringList("settings.blacklisted-worlds");
-        autoAddClan = loadBoolean("settings.auto-allow-clan-on-fields");
         autoAddTeam = loadBoolean("settings.auto-allow-team-on-fields");
         oncePerBlockOnMove = loadBoolean("settings.check-once-per-block-on-move");
         useIdInSnitches = loadBoolean("settings.use-blockids-in-snitches");
@@ -1626,17 +1620,11 @@ public final class SettingsManager {
 		return disableWorldEditHook;
 	}
 
-    public boolean isDisableSimpleClanHook() {
-        return disableSimpleClanHook;
-    }
 
     public boolean isLogRentsAndPurchases() {
         return logRentsAndPurchases;
     }
 
-    public boolean isAutoAddClan() {
-        return autoAddClan;
-    }
 
     public boolean isNaturalFloorType(int type) {
         return type == 1 || type == 2 || type == 3 || type == 4 || type == 7 || type == 12 || type == 13 || type == 14 || type == 15 || type == 16 || type == 17 || type == 21 || type == 60 || type == 73 || type == 74 || type == 80 || type == 82 || type == 87 || type == 88 || type == 110 || type == 97 || type == 129;
@@ -1666,13 +1654,7 @@ public final class SettingsManager {
         return preventRemovalIfPlayerInField;
     }
 
-    public boolean isWarAllow() {
-        return warAllow;
-    }
 
-    public void setWarAllow(boolean warAllow) {
-        this.warAllow = warAllow;
-    }
 
     public int getMaxTargetDistance() {
         return maxTargetDistance;

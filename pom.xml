@@ -73,6 +73,7 @@
 							<include>com.zaxxer:HikariCP</include>
 							<include>org.slf4j:slf4j-api</include>
 							<include>org.slf4j:slf4j-jdk14</include>
+							<include>com.googlecode.json-simple:json-simple</include>
 						</includes>
 					</artifactSet>
 					<relocations>
@@ -83,6 +84,10 @@
 						<relocation>
 							<pattern>com.zaxxer</pattern>
 							<shadedPattern>net.sacredlabyrinth.Phaed.PreciousStones.shaded.com.zaxxer</shadedPattern>
+						</relocation>
+						<relocation>
+							<pattern>org.json.simple</pattern>
+							<shadedPattern>net.sacredlabyrinth.Phaed.PreciousStones.shaded.org.json.simple</shadedPattern>
 						</relocation>
 						<relocation>
 							<pattern>org.slf4j</pattern>
@@ -114,91 +119,35 @@
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
-            <version>1.7</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.nijikokun.bukkit</groupId>
-            <artifactId>Permissions</artifactId>
-            <version>2.7.4</version>
+            <version>1.7.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-bukkit</artifactId>
-            <version>7.0.0-SNAPSHOT</version>
+            <version>7.4.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
-            <artifactId>worldguard-legacy</artifactId>
-            <version>7.0.0-SNAPSHOT</version>
+            <artifactId>worldguard-bukkit</artifactId>
+            <version>7.0.20</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.trc202.CombatTag</groupId>
-            <artifactId>CombatTag</artifactId>
-            <version>6.2.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.griefcraft</groupId>
-            <artifactId>LWC</artifactId>
-            <version>4.4.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.yi.acru.bukkit</groupId>
-            <artifactId>Lockette</artifactId>
-            <version>1.7.12</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.marcelo-mason</groupId>
-            <artifactId>SimpleClans</artifactId>
-            <version>2.9.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.platymuus</groupId>
-            <artifactId>bukkit-permissions</artifactId>
-            <version>2.3</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.gmail.nossr50.mcMMO</groupId>
             <artifactId>mcMMO</artifactId>
-            <version>1.5.00</version>
+            <version>2.3.002</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.gravitydevelopment.anticheat</groupId>
-            <artifactId>AntiCheat</artifactId>
-            <version>2.0.2</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>br.net.fabiozumbi12.RedProtect</groupId>
-            <artifactId>RedProtect-Core</artifactId>
-            <version>7.6.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>br.net.fabiozumbi12.RedProtect</groupId>
-            <artifactId>RedProtect-Spigot-1.13</artifactId>
-            <version>7.6.2</version>
-            <scope>provided</scope>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
             <exclusions>
                 <exclusion>
-                    <groupId>org.spigotmc</groupId>
-                    <artifactId>spigot-api</artifactId>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -238,8 +187,8 @@
             <url>https://maven.elmakers.com/repository/</url>
         </repository>
         <repository>
-            <id>redprotect-repo</id>
-            <url>https://raw.githubusercontent.com/FabioZumbi12/RedProtect/mvn-repo/</url>
+            <id>neetgames</id>
+            <url>https://nexus.neetgames.com/repository/maven-public/</url>
         </repository>
         <repository>
             <id>jitpack.io</id>

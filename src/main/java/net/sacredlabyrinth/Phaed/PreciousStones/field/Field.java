@@ -558,17 +558,6 @@ public class Field extends AbstractVec implements Comparable<Field> {
             }
         }
 
-        String clan;
-        if (target.contains("c:")) {
-            clan = PreciousStones.getInstance().getSimpleClansManager().getClan(target.substring(2), false);
-        } else {
-            clan = PreciousStones.getInstance().getSimpleClansManager().getClan(target, true);
-        }
-
-        if (clan != null) {
-            return allowed.contains("c:" + clan);
-        }
-
         // TODO: This method is very slow and can cause a lockup on the server thread
         OfflinePlayer offlinePlayer = PreciousStones.getInstance().getServer().getOfflinePlayer(target);
 

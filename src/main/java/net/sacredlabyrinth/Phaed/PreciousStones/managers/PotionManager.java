@@ -7,7 +7,6 @@ package net.sacredlabyrinth.Phaed.PreciousStones.managers;
 import net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones;
 import net.sacredlabyrinth.Phaed.PreciousStones.field.Field;
 import net.sacredlabyrinth.Phaed.PreciousStones.field.FieldFlag;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -52,8 +51,6 @@ public class PotionManager {
                 if (!player.hasPotionEffect(pot)) {
                     player.addPotionEffect(new PotionEffect(pot, 72000, intensity));
                 }
-                plugin.getPermissionsManager().allowFast(player);
-                plugin.getPermissionsManager().allowFly(player);
             }
         }
     }
@@ -64,7 +61,6 @@ public class PotionManager {
         for (PotionEffectType pot : potions.keySet()) {
             if (player.hasPotionEffect(pot)) {
                 player.removePotionEffect(pot);
-                plugin.getPermissionsManager().resetFast(player);
             }
         }
     }
@@ -75,7 +71,6 @@ public class PotionManager {
         for (PotionEffectType pot : noPotions) {
             if (player.hasPotionEffect(pot)) {
                 player.removePotionEffect(pot);
-                plugin.getPermissionsManager().resetFast(player);
                 plugin.getCommunicationManager().showNoPotion(player, pot.getName());
             }
         }

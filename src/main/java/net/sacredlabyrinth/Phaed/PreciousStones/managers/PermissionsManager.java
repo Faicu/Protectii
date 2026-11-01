@@ -1,23 +1,15 @@
 package net.sacredlabyrinth.Phaed.PreciousStones.managers;
 
 import com.gmail.nossr50.mcMMO;
-import com.griefcraft.lwc.LWC;
-import com.griefcraft.lwc.LWCPlugin;
-import com.griefcraft.model.Protection;
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
-import com.platymuus.bukkit.permissions.Group;
-import com.platymuus.bukkit.permissions.PermissionsPlugin;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
-import net.gravitydevelopment.anticheat.api.AntiCheatAPI;
-import net.gravitydevelopment.anticheat.check.CheckType;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones;
 import net.sacredlabyrinth.Phaed.PreciousStones.entries.PlayerEntry;
 import net.sacredlabyrinth.Phaed.PreciousStones.field.FieldSettings;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -25,7 +17,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.yi.acru.bukkit.Lockette.Lockette;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,10 +29,6 @@ import java.util.List;
 public final class PermissionsManager {
     public static Permission permission = null;
     private static Economy economy = null;
-    private PermissionHandler handler = null;
-    private PermissionsPlugin pbukkit = null;
-    private LWC lwc = null;
-    private Lockette lockette = null;
     private PreciousStones plugin;
     private mcMMO mcmmo = null;
 	private WorldEditPlugin worldEdit = null;
@@ -51,11 +38,6 @@ public final class PermissionsManager {
      */
     public PermissionsManager() {
         plugin = PreciousStones.getInstance();
-        detectPermissionsBukkit();
-        detectPermissionsEx();
-        detectPermissions();
-        detectLWC();
-        detectLockette();
         detectMcMMO();
         detectWorldEdit();
 
@@ -86,45 +68,6 @@ public final class PermissionsManager {
         }
     }
 
-    private void detectLWC() {
-        Plugin plug = plugin.getServer().getPluginManager().getPlugin("LWC");
-
-        if (plug != null) {
-            lwc = ((LWCPlugin) plug).getLWC();
-        }
-    }
-
-    private void detectLockette() {
-        Plugin plug = plugin.getServer().getPluginManager().getPlugin("Lockette");
-
-        if (plug != null) {
-            lockette = ((Lockette) plug);
-        }
-    }
-
-    private void detectPermissions() {
-        if (handler == null) {
-            Plugin test = plugin.getServer().getPluginManager().getPlugin("Permissions");
-
-            if (test != null) {
-                handler = ((Permissions) test).getHandler();
-            }
-        }
-    }
-
-    private void detectPermissionsEx() {
-    }
-
-    private void detectPermissionsBukkit() {
-        if (pbukkit == null) {
-            Plugin test = plugin.getServer().getPluginManager().getPlugin("PermissionsBukkit");
-
-            if (test != null) {
-                pbukkit = ((PermissionsPlugin) test);
-            }
-        }
-    }
-
     private Boolean setupPermissions() {
         RegisteredServiceProvider<Permission> permissionProvider = plugin.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
         if (permissionProvider != null) {
@@ -144,23 +87,11 @@ public final class PermissionsManager {
     }
 
     public boolean canBuild(Player player, Location loc) {
-        WorldGuardManager wm = PreciousStones.getInstance().getWorldGuardManager();
-        RedProtectManager rm = PreciousStones.getInstance().getRedProtectManager();
-
-        if (!wm.canBuild(player, loc)) {
-            return false;
-        }
-        return rm.canBuild(player, loc);
+        return PreciousStones.getInstance().getWorldGuardManager().canBuild(player, loc);
     }
 
     public boolean canBuildField(Player player, Block block, FieldSettings fs) {
-        WorldGuardManager wm = PreciousStones.getInstance().getWorldGuardManager();
-        RedProtectManager rm = PreciousStones.getInstance().getRedProtectManager();
-
-        if (!wm.canBuildField(player, block, fs)) {
-            return false;
-        }
-        return rm.canBuildField(player, block, fs);
+        return PreciousStones.getInstance().getWorldGuardManager().canBuildField(player, block, fs);
     }
 
     /**
@@ -191,12 +122,6 @@ public final class PermissionsManager {
             }
 
             return permission.has(player, perm);
-        } else if (handler != null) {
-            if (handler.has(player, "preciousstones.blacklist") && !handler.has(player, "preciousstones.admin.isadmin")) {
-                return false;
-            }
-
-            return handler.has(player, perm);
         } else {
             return player.hasPermission(perm);
         }
@@ -212,19 +137,8 @@ public final class PermissionsManager {
      */
     public boolean inGroup(String playerName, World world, String group) {
         try {
-            if (pbukkit != null) {
-                List<Group> groups = pbukkit.getGroups(playerName);
-
-                for (Group g : groups) {
-                    if (g.getName().equalsIgnoreCase(group)) {
-                        return true;
-                    }
-                }
-                return false;
-            } else if (permission != null) {
-                return permission.playerInGroup(world, playerName, group);
-            } else if (handler != null) {
-                return handler.getGroup(world.getName(), playerName).equalsIgnoreCase(group);
+            if (permission != null) {
+                return permission.playerInGroup(world.getName(), Bukkit.getOfflinePlayer(playerName), group);
             }
         } catch (Exception ex) {
             // no group support
@@ -243,27 +157,10 @@ public final class PermissionsManager {
         List<String> groups = new ArrayList<>();
 
         try {
-            if (pbukkit != null) {
-                List<Group> gs = pbukkit.getGroups(playerName);
+            if (permission != null) {
+                String[] groupList = permission.getPlayerGroups(worldName, Bukkit.getOfflinePlayer(playerName));
 
-                for (Group group : gs) {
-                    groups.add(group.getName().toLowerCase());
-                }
-                return groups;
-            } else if (permission != null) {
-                World world = plugin.getServer().getWorld(worldName);
-
-                if (world != null) {
-                    String[] groupList = permission.getPlayerGroups(world, playerName);
-
-                    Collections.addAll(groups, groupList);
-                }
-            } else if (handler != null) {
-                @SuppressWarnings("deprecation") String group = handler.getGroup(worldName, playerName);
-
-                if (group != null) {
-                    groups.add(group.toLowerCase());
-                }
+                Collections.addAll(groups, groupList);
             }
         } catch (Exception ex) {
             // no group support
@@ -280,17 +177,6 @@ public final class PermissionsManager {
      * @param group
      */
     public void addGroup(Player player, String group) {
-        /*if (pex != null)
-        {
-            PermissionUser user = PermissionsEx.getUser(player.getName());
-
-            if (user != null)
-            {
-                user.addGroup(player.getName(), group);
-            }
-        }
-        else*/
-
         if (permission != null) {
             if (player != null) {
                 permission.playerAddGroup(player, group);
@@ -329,7 +215,7 @@ public final class PermissionsManager {
      * @return
      */
     public boolean playerCharge(Player player, double amount) {
-        return economy.withdrawPlayer(player.getName(), amount).transactionSuccess();
+        return economy.withdrawPlayer(player, amount).transactionSuccess();
     }
 
     /**
@@ -340,7 +226,7 @@ public final class PermissionsManager {
      * @return
      */
     public boolean playerCharge(String playerName, double amount) {
-        return economy.withdrawPlayer(playerName, amount).transactionSuccess();
+        return economy.withdrawPlayer(Bukkit.getOfflinePlayer(playerName), amount).transactionSuccess();
     }
 
     /**
@@ -351,7 +237,7 @@ public final class PermissionsManager {
      * @return
      */
     public boolean playerCredit(Player player, double amount) {
-        return economy.depositPlayer(player.getName(), amount).transactionSuccess();
+        return economy.depositPlayer(player, amount).transactionSuccess();
     }
 
     /**
@@ -362,7 +248,7 @@ public final class PermissionsManager {
      * @return
      */
     public static boolean hasMoney(Player player, double amount) {
-        return economy.has(player.getName(), amount);
+        return economy.has(player, amount);
     }
 
     /**
@@ -373,46 +259,15 @@ public final class PermissionsManager {
      * @return
      */
     public static boolean hasMoney(String playerName, double amount) {
-        return economy.has(playerName, amount);
+        return economy.has(Bukkit.getOfflinePlayer(playerName), amount);
     }
 
-    public boolean lwcProtected(Player player, Block block) {
-        if (lwc == null) {
-            return false;
-        }
-
-        Protection protection = lwc.findProtection(block);
-
-        if (protection != null) {
-            return !lwc.canAccessProtection(player, block);
-        }
-
-        return false;
-    }
-
-    public boolean locketteProtected(Player player, Block block) {
-        if (lockette == null) {
-            return false;
-        }
-
-        if (Lockette.isProtected(block)) {
-            String owner = Lockette.getProtectedOwner(block);
-            return !owner.equalsIgnoreCase(player.getName());
-        }
-
-        return false;
-    }
-    
     public boolean hasWorldEdit() {
     	return worldEdit != null;
     }
 
     public boolean hasMcMMO() {
         return mcmmo != null;
-    }
-
-    public boolean hasLWC() {
-        return lwc != null;
     }
 
     public boolean isVanished(Player player) {
@@ -427,29 +282,4 @@ public final class PermissionsManager {
         return false;
     }
 
-    public void allowFly(Player player) {
-        if (Bukkit.getServer().getPluginManager().getPlugin("AntiCheat") != null) {
-            AntiCheatAPI.exemptPlayer(player, CheckType.FLY);
-        }
-    }
-
-    public void resetFly(Player player) {
-        if (Bukkit.getServer().getPluginManager().getPlugin("AntiCheat") != null) {
-            AntiCheatAPI.unexemptPlayer(player, CheckType.FLY);
-        }
-    }
-
-    public void allowFast(Player player) {
-        if (Bukkit.getServer().getPluginManager().getPlugin("AntiCheat") != null) {
-            AntiCheatAPI.exemptPlayer(player, CheckType.FAST_BREAK);
-            AntiCheatAPI.exemptPlayer(player, CheckType.FAST_PLACE);
-        }
-    }
-
-    public void resetFast(Player player) {
-        if (Bukkit.getServer().getPluginManager().getPlugin("AntiCheat") != null) {
-            AntiCheatAPI.unexemptPlayer(player, CheckType.FAST_BREAK);
-            AntiCheatAPI.unexemptPlayer(player, CheckType.FAST_PLACE);
-        }
-    }
 }

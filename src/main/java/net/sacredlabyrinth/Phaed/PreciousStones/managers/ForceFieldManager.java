@@ -249,16 +249,6 @@ public final class ForceFieldManager {
             field.getRentingModule().scheduleNextRentUpdate();
         }
 
-        // add allowed clan
-
-        if (plugin.getSettingsManager().isAutoAddClan()) {
-            String clan = plugin.getSimpleClansManager().getClan(player.getName(), true);
-
-            if (clan != null) {
-                field.addAllowed("c:" + clan);
-            }
-        }
-
         // add allowed team
 
         if (plugin.getSettingsManager().isAutoAddTeam()) {
@@ -738,15 +728,6 @@ public final class ForceFieldManager {
                     String group = target.substring(2);
 
                     if (plugin.getPermissionsManager().inGroup(field.getOwner(), world, group)) {
-                        out.add(field);
-                    }
-                    continue;
-                }
-
-                if (target.contains("c:")) {
-                    String clan = target.substring(2);
-
-                    if (plugin.getSimpleClansManager().isInClan(field.getOwner(), clan)) {
                         out.add(field);
                     }
                     continue;
@@ -1271,13 +1252,6 @@ public final class ForceFieldManager {
         // Deny if the target is in the global deny list
         if (field.getSettings().inDeniedList(target)) {
             return false;
-        }
-
-        // If you're currently in war, allow
-        if (plugin.getSettingsManager().isWarAllow()) {
-            if (plugin.getSimpleClansManager().inWar(field, target)) {
-                return true;
-            }
         }
 
         // Otherwise, allow
@@ -2958,16 +2932,6 @@ public final class ForceFieldManager {
 
         if (field.hasFlag(FieldFlag.RENTABLE) || field.hasFlag(FieldFlag.SHAREABLE)) {
             field.getRentingModule().scheduleNextRentUpdate();
-        }
-
-        // add allowed clan
-
-        if (plugin.getSettingsManager().isAutoAddClan()) {
-            String clan = plugin.getSimpleClansManager().getClan(owner.getName(), true);
-
-            if (clan != null) {
-                field.addAllowed("c:" + clan);
-            }
         }
 
         // add allowed team

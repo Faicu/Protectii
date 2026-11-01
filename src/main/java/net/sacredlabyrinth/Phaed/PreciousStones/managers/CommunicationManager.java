@@ -1489,21 +1489,6 @@ public class CommunicationManager {
     /**
      * @param attacker
      * @param victim
-     */
-    public void warnBypassPvPDueToCombat(Player attacker, Player victim) {
-
-        if (canNotify(attacker)) {
-            ChatHelper.send(attacker, "warnProtectionIgnored");
-        }
-
-        if (canNotify(victim)) {
-            ChatHelper.send(victim, "warnProtectionIgnored");
-        }
-    }
-
-    /**
-     * @param attacker
-     * @param victim
      * @param field
      */
     public void warnBypassPvP(Player attacker, Player victim, Field field) {
