@@ -1411,11 +1411,12 @@ public class StorageManager {
      */
     private void insertBlockGrief(Connection conn, Field field, GriefBlock gb) throws SQLException {
         Object[] parameters = new Object[] {Helper.getMillis(), field.getX(), field.getY(), field.getZ(), field.getWorld(),
-                gb.getX(), gb.getY(), gb.getZ(), Helper.getMaterialName(gb.getType()), 0, gb.getSignText()};
+                gb.getX(), gb.getY(), gb.getZ(), 0, Helper.getMaterialName(gb.getType()), 0, gb.getSignText()};
 
+        // type_id is the legacy numeric id; the column is NOT NULL in existing databases, so it gets a placeholder
         try (PreparedStatement prepStmt = conn.prepareStatement(
                         "INSERT INTO `pstone_grief_undo` (`date_griefed`, `field_x`, `field_y`, `field_z`, `world`, "
-                        + "`x`, `y`, `z`, `type`, `data`, `sign_text`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+                        + "`x`, `y`, `z`, `type_id`, `type`, `data`, `sign_text`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
             SqlUtils.setArguments(prepStmt, parameters);
             synchronized (this) {
@@ -1475,7 +1476,7 @@ public class StorageManager {
 
                             GriefBlock gb = new GriefBlock(x, y, z, field.getWorld(), type);
 
-                            if (type_id == 0 || type_id == 8 || type_id == 9 || type_id == 10 || type_id == 11) {
+                            if (Helper.isEmptyMaterial(material)) {
                                 gb.setEmpty(true);
                             }
 
@@ -1674,14 +1675,15 @@ public class StorageManager {
 
         Object[] parameters = new Object[] {
                 field.getName(), field.getOwner(), field.getWorld(), tb.getRx(), tb.getRy(), tb.getRz(),
-                tb.getType(), 0, tb.getContents(), tb.getSignText(), (applied ? 1 : 0)
+                0, Helper.getMaterialName(tb.getType()), 0, tb.getContents(), tb.getSignText(), (applied ? 1 : 0)
         };
 
+        // type_id is the legacy numeric id; the column is NOT NULL in existing databases, so it gets a placeholder
         try (Connection conn = getConnection();
                 PreparedStatement prepStmt = conn.prepareStatement(
                         "INSERT INTO `pstone_storedblocks` (`name`, `player_name`, `world`, `x`, `y`, `z`, "
-                        + "`type_id`, `data`, `contents`, `sign_text`, `applied`) "
-                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+                        + "`type_id`, `type`, `data`, `contents`, `sign_text`, `applied`) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
             SqlUtils.setArguments(prepStmt, parameters);
             synchronized (this) {
@@ -1856,7 +1858,7 @@ public class StorageManager {
 
                         TranslocationBlock tb = new TranslocationBlock(location, type);
 
-                        if (type_id == 0 || type_id == 8 || type_id == 9 || type_id == 10 || type_id == 11) {
+                        if (Helper.isEmptyMaterial(material)) {
                             tb.setEmpty(true);
                         }
 
@@ -1921,7 +1923,7 @@ public class StorageManager {
 
                         TranslocationBlock tb = new TranslocationBlock(location, type);
 
-                        if (type_id == 0 || type_id == 8 || type_id == 9 || type_id == 10 || type_id == 11) {
+                        if (Helper.isEmptyMaterial(material)) {
                             tb.setEmpty(true);
                         }
 

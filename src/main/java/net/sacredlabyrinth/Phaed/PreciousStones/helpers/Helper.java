@@ -993,4 +993,14 @@ public class Helper {
     public static String getPotionName(PotionEffectType type) {
         return type.getKeyOrThrow().getKey();
     }
+
+    /**
+     * Whether a stored block counts as empty space (air or liquid) when restoring
+     *
+     * @param material
+     * @return
+     */
+    public static boolean isEmptyMaterial(Material material) {
+        return material == null || material.isAir() || material == Material.WATER || material == Material.LAVA;
+    }
 }
