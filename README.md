@@ -24,6 +24,11 @@ Support for SimpleClans, LWC, Lockette, RedProtect, CombatTag, AntiCheat, Permis
 - Clearing a field's allowed list (e.g. after a purchase) is saved.
 - SQLite waits for locks instead of failing with "database is locked".
 
+## Download
+
+Ready-to-use plugin: [`release/Protectii-26.3.jar`](release/Protectii-26.3.jar) — put it in the server's `plugins/` folder.
+The plugin still registers itself as `PreciousStones` (command `/ps`, permissions `preciousstones.*`).
+
 ## Build
 
 ```
