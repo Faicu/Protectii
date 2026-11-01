@@ -6,7 +6,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.bukkit.material.Attachable;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.HangingSign;
+import org.bukkit.block.data.type.WallSign;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -39,16 +41,15 @@ public class SignHelper {
      * @return
      */
     public static Block getAttachedBlock(Block signBlock) {
-        Object m = signBlock.getState().getData();
-        BlockFace face = null;
+        BlockData data = signBlock.getBlockData();
+        BlockFace face = BlockFace.DOWN;
 
-        if (m instanceof Attachable) {
-            face = ((Attachable) m).getAttachedFace();
+        if (data instanceof WallSign wallSign) {
+            face = wallSign.getFacing().getOppositeFace();
+        } else if (data instanceof HangingSign) {
+            face = BlockFace.UP;
         }
-        
-        if(face == null)
-        	face = BlockFace.DOWN;
-        
+
         return signBlock.getRelative(face);
     }
 
