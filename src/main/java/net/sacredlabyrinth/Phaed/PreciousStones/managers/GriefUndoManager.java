@@ -5,6 +5,7 @@ import net.sacredlabyrinth.Phaed.PreciousStones.Rollback;
 import net.sacredlabyrinth.Phaed.PreciousStones.blocks.GriefBlock;
 import net.sacredlabyrinth.Phaed.PreciousStones.field.Field;
 import net.sacredlabyrinth.Phaed.PreciousStones.helpers.Helper;
+import org.bukkit.block.sign.Side;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -142,7 +143,7 @@ public final class GriefUndoManager {
         String signText = "";
         Sign sign = (Sign) block.getState();
 
-        for (String line : sign.getLines()) {
+        for (String line : sign.getSide(Side.FRONT).getLines()) {
             signText += line + "`";
         }
 
@@ -259,7 +260,7 @@ public final class GriefUndoManager {
                 String[] lines = gb.getSignText().split("[`]");
 
                 for (int i = 0; i < lines.length; i++) {
-                    sign.setLine(i, lines[i]);
+                    sign.getSide(Side.FRONT).setLine(i, lines[i]);
                     sign.update();
                 }
             }

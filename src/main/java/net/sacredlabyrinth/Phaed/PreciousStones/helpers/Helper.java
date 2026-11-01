@@ -14,6 +14,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 
 import java.lang.reflect.Field;
@@ -956,5 +957,40 @@ public class Helper {
             org.bukkit.Bukkit.getLogger().log(Level.SEVERE, "PreciousStones failed to hackily workaround Material.getId legacy issues, all is lost, abandon hope", ex);
         }
         return id;
+    }
+
+    private static final Map<String, String> LEGACY_POTION_NAMES = Map.ofEntries(
+            Map.entry("slow", "slowness"),
+            Map.entry("fast_digging", "haste"),
+            Map.entry("slow_digging", "mining_fatigue"),
+            Map.entry("increase_damage", "strength"),
+            Map.entry("heal", "instant_health"),
+            Map.entry("harm", "instant_damage"),
+            Map.entry("jump", "jump_boost"),
+            Map.entry("confusion", "nausea"),
+            Map.entry("damage_resistance", "resistance")
+    );
+
+    /**
+     * Looks up a potion effect by its key (speed, minecraft:speed) or by its legacy Bukkit name (FAST_DIGGING)
+     *
+     * @param name
+     * @return the effect, or null if unknown
+     */
+    public static PotionEffectType getPotionEffectType(String name) {
+        String key = name.trim().toLowerCase(Locale.ROOT);
+        if (key.startsWith("minecraft:")) {
+            key = key.substring("minecraft:".length());
+        }
+        key = LEGACY_POTION_NAMES.getOrDefault(key, key);
+        return Registry.EFFECT.match(key);
+    }
+
+    /**
+     * @param type
+     * @return the effect's key without namespace, e.g. mining_fatigue
+     */
+    public static String getPotionName(PotionEffectType type) {
+        return type.getKeyOrThrow().getKey();
     }
 }

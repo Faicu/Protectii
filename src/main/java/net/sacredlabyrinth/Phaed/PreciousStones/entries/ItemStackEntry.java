@@ -51,7 +51,7 @@ public class ItemStackEntry {
 
         for (Enchantment e : enchantments.keySet()) {
             Integer integer = enchantments.get(e);
-            ench.put(e.getKey().getKey(), integer);
+            ench.put(e.getKeyOrThrow().getKey(), integer);
         }
 
         JSONObject out = new JSONObject();

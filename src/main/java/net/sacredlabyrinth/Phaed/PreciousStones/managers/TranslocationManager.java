@@ -10,6 +10,7 @@ import net.sacredlabyrinth.Phaed.PreciousStones.translocation.TranslocationAppli
 import net.sacredlabyrinth.Phaed.PreciousStones.translocation.TranslocationImporter;
 import net.sacredlabyrinth.Phaed.PreciousStones.translocation.TranslocationRemover;
 import net.sacredlabyrinth.Phaed.PreciousStones.translocation.TranslocationUpdater;
+import org.bukkit.block.sign.Side;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -150,7 +151,7 @@ public final class TranslocationManager {
         String signText = "";
         Sign sign = (Sign) block.getState();
 
-        for (String line : sign.getLines()) {
+        for (String line : sign.getSide(Side.FRONT).getLines()) {
             signText += line + "`";
         }
 
@@ -237,7 +238,7 @@ public final class TranslocationManager {
                 String[] lines = tb.getSignText().split("[`]");
 
                 for (int i = 0; i < lines.length; i++) {
-                    sign.setLine(i, lines[i]);
+                    sign.getSide(Side.FRONT).setLine(i, lines[i]);
                     sign.update();
                 }
             }

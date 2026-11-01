@@ -12,6 +12,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -710,8 +712,8 @@ public final class EntryManager {
     }
     
     private double playerMaxHealth(Player p) {
-        // They deprecated this but the replacement is super flaky because they keep changing attribute names sooo
-		return p.getMaxHealth();
+        AttributeInstance maxHealth = p.getAttribute(Attribute.MAX_HEALTH);
+        return maxHealth != null ? maxHealth.getValue() : 20.0;
 	}
 
     private double healthCheck(double health, Player p) {

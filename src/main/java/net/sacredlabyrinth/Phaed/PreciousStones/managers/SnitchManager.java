@@ -7,6 +7,7 @@ import net.sacredlabyrinth.Phaed.PreciousStones.field.Field;
 import net.sacredlabyrinth.Phaed.PreciousStones.field.FieldFlag;
 import net.sacredlabyrinth.Phaed.PreciousStones.helpers.ChatHelper;
 import net.sacredlabyrinth.Phaed.PreciousStones.helpers.Helper;
+import org.bukkit.block.sign.Side;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
@@ -202,7 +203,7 @@ public class SnitchManager {
 
         Sign sign = (Sign) block.getState();
 
-        if (sign.getLines().length == 0) {
+        if (sign.getSide(Side.FRONT).getLines().length == 0) {
             return;
         }
 

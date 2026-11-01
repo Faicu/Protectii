@@ -70,7 +70,7 @@ public class WorldEditListener {
 				return allowed;
 			}
 
-			Location bukkitLocation = new Location(world, l.getX(), l.getY(), l.getZ());
+			Location bukkitLocation = new Location(world, l.x(), l.y(), l.z());
 			Block bukkitBlock = bukkitLocation.getBlock();
 			
 			PreciousStones ps = PreciousStones.getInstance();

@@ -6,6 +6,7 @@ import net.sacredlabyrinth.Phaed.PreciousStones.field.FieldFlag;
 import net.sacredlabyrinth.Phaed.PreciousStones.helpers.ChatHelper;
 import net.sacredlabyrinth.Phaed.PreciousStones.helpers.Helper;
 import net.sacredlabyrinth.Phaed.PreciousStones.helpers.SignHelper;
+import org.bukkit.block.sign.Side;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -33,7 +34,7 @@ public class FieldSign {
 
         sign = ((Sign) signBlock.getState());
 
-        String[] lines = sign.getLines();
+        String[] lines = sign.getSide(Side.FRONT).getLines();
 
         valid = extractData(signBlock, lines);
     }
@@ -162,28 +163,28 @@ public class FieldSign {
     }
 
     public void setRentedColor() {
-        sign.setLine(0, ChatColor.RED + "" + ChatColor.BOLD + ChatColor.stripColor(sign.getLine(0)));
+        sign.getSide(Side.FRONT).setLine(0, ChatColor.RED + "" + ChatColor.BOLD + ChatColor.stripColor(sign.getSide(Side.FRONT).getLine(0)));
         sign.update();
     }
 
     public void setSharedColor() {
-        sign.setLine(0, ChatColor.GOLD + "" + ChatColor.BOLD + ChatColor.stripColor(sign.getLine(0)));
+        sign.getSide(Side.FRONT).setLine(0, ChatColor.GOLD + "" + ChatColor.BOLD + ChatColor.stripColor(sign.getSide(Side.FRONT).getLine(0)));
         sign.update();
     }
 
     public void setAvailableColor() {
-        sign.setLine(0, ChatColor.BOLD + ChatColor.stripColor(sign.getLine(0)));
-        sign.setLine(3, "");
+        sign.getSide(Side.FRONT).setLine(0, ChatColor.BOLD + ChatColor.stripColor(sign.getSide(Side.FRONT).getLine(0)));
+        sign.getSide(Side.FRONT).setLine(3, "");
         sign.update();
     }
 
     public void updateRemainingTime(int seconds) {
-        sign.setLine(3, ChatColor.BOLD + SignHelper.secondsToPeriods(seconds));
+        sign.getSide(Side.FRONT).setLine(3, ChatColor.BOLD + SignHelper.secondsToPeriods(seconds));
         sign.update();
     }
 
     public void cleanRemainingTime() {
-        sign.setLine(3, "");
+        sign.getSide(Side.FRONT).setLine(3, "");
         sign.update();
     }
 

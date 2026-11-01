@@ -8,6 +8,7 @@ import org.json.simple.parser.JSONParser;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -45,7 +46,7 @@ public class UUIDFetcher implements Callable<Map<String, UUID>> {
     }
 
     private static HttpURLConnection createConnection() throws Exception {
-        URL url = new URL(PROFILE_URL);
+        URL url = URI.create(PROFILE_URL).toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");

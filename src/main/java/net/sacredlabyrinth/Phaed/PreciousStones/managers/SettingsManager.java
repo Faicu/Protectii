@@ -525,18 +525,21 @@ public final class SettingsManager {
     }
 
     public boolean isHarmfulPotion(PotionEffectType pot) {
-        String type = pot.getName().toLowerCase();
+        String type = Helper.getPotionName(pot);
 
         return (type.equals("blindness") ||
-                type.equals("confusion") ||
+                type.equals("nausea") ||
                 type.equals("hunger") ||
-                type.equals("harm") ||
+                type.equals("instant_damage") ||
                 type.equals("poison") ||
-                type.equals("weakness") || type.equals("increase_damage") ||
-                type.equals("slow") || type.equals("slowness") ||
-                type.equals("slow_digging") || type.equals("mining_fatigue") ||
+                type.equals("weakness") ||
+                type.equals("strength") ||
+                type.equals("slowness") ||
+                type.equals("mining_fatigue") ||
                 type.equals("unluck") ||
-                type.equals("wither")
+                type.equals("wither") ||
+                type.equals("darkness") ||
+                type.equals("bad_omen")
         );
     }
 

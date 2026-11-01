@@ -200,8 +200,10 @@ public class FieldSettings {
                 i = intensities.get(pos);
             }
 
-            if (PotionEffectType.getByName(name) != null) {
-                potions.put(PotionEffectType.getByName(name), i);
+            PotionEffectType type = Helper.getPotionEffectType(name);
+
+            if (type != null) {
+                potions.put(type, i);
             }
             pos++;
         }
@@ -209,8 +211,10 @@ public class FieldSettings {
         List<String> npts = loadStringList("neutralize-potions");
 
         for (String name : npts) {
-            if (PotionEffectType.getByName(name) != null) {
-                neutralizePotions.add(PotionEffectType.getByName(name));
+            PotionEffectType type = Helper.getPotionEffectType(name);
+
+            if (type != null) {
+                neutralizePotions.add(type);
             }
         }
 
@@ -991,7 +995,7 @@ public class FieldSettings {
     public String getPotionString() {
         String out = "";
         for (PotionEffectType potion : potions.keySet()) {
-            out += Helper.friendlyName(potion.getName()) + ", ";
+            out += Helper.friendlyName(Helper.getPotionName(potion)) + ", ";
         }
 
         return Helper.stripTrailing(out, ", ");
@@ -1006,7 +1010,7 @@ public class FieldSettings {
         String out = "";
 
         for (PotionEffectType potion : neutralizePotions) {
-            out += Helper.friendlyName(potion.getName()) + ", ";
+            out += Helper.friendlyName(Helper.getPotionName(potion)) + ", ";
         }
 
         return Helper.stripTrailing(out, ", ");

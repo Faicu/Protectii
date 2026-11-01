@@ -74,6 +74,7 @@
 							<include>org.slf4j:slf4j-api</include>
 							<include>org.slf4j:slf4j-jdk14</include>
 							<include>com.googlecode.json-simple:json-simple</include>
+							<include>org.bstats:*</include>
 						</includes>
 					</artifactSet>
 					<relocations>
@@ -84,6 +85,10 @@
 						<relocation>
 							<pattern>com.zaxxer</pattern>
 							<shadedPattern>net.sacredlabyrinth.Phaed.PreciousStones.shaded.com.zaxxer</shadedPattern>
+						</relocation>
+						<relocation>
+							<pattern>org.bstats</pattern>
+							<shadedPattern>net.sacredlabyrinth.Phaed.PreciousStones.shaded.bstats</shadedPattern>
 						</relocation>
 						<relocation>
 							<pattern>org.json.simple</pattern>
@@ -139,6 +144,11 @@
             <artifactId>mcMMO</artifactId>
             <version>2.3.002</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>3.2.1</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>

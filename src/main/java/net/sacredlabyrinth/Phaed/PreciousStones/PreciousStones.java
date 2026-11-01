@@ -1,5 +1,7 @@
 package net.sacredlabyrinth.Phaed.PreciousStones;
 
+import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import net.sacredlabyrinth.Phaed.PreciousStones.api.Api;
 import net.sacredlabyrinth.Phaed.PreciousStones.api.IApi;
 import net.sacredlabyrinth.Phaed.PreciousStones.helpers.ChatHelper;
@@ -13,7 +15,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -166,12 +167,7 @@ public class PreciousStones extends JavaPlugin {
         registerCommands();
         
 		Metrics metrics = new Metrics(this, 7619);
-		metrics.addCustomChart(new Metrics.SimplePie("server_language", new Callable<String>() {
-			@Override
-			public String call() throws Exception {
-				return Locale.getDefault().toString();
-			}
-		}));
+		metrics.addCustomChart(new SimplePie("server_language", () -> Locale.getDefault().toString()));
     }
 
     private void displayStatusInfo() {
