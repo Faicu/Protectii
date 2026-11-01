@@ -511,6 +511,7 @@ public class Field extends AbstractVec implements Comparable<Field> {
 
     public void clearAllowed() {
         allowed.clear();
+        dirty.add(DirtyFieldReason.ALLOWED);
     }
 
     /**
